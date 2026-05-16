@@ -57,7 +57,7 @@ async function sendMessage() {
   const typingEl = addMessage('bot', 'Typing...');
 
   try {
-    const response = await fetch('http://localhost:5000/api/chatbot/message', {
+    const response = await fetch('https://chatbot-project-backend-liuc.onrender.com/api/chatbot/message', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ patientDetails, message })
@@ -109,7 +109,7 @@ async function sendMessage() {
   const typingEl = addTypingIndicator();
 
   try {
-    const response = await fetch('http://localhost:5000/api/chatbot/message', {
+    const response = await fetch('https://chatbot-project-backend-liuc.onrender.com/api/chatbot/message', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ patientDetails, message })
