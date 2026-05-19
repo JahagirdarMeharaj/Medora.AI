@@ -47,33 +47,6 @@ toggleMode.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-async function sendMessage() {
-  const message = userInput.value.trim();
-  if (!message) return;
-
-  addMessage('user', escapeForText(message));
-  userInput.value = '';
-
-  const typingEl = addMessage('bot', 'Typing...');
-
-  try {
-    const response = await fetch('https://chatbot-project-1rrr.onrender.com/api/chatbot/message', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ patientDetails, message })
-    });
-
-    const data = await response.json();
-    const reply = escapeForText(data?.reply ?? 'Sorry, I could not process your request.');
-
-    typingEl.textContent = reply;
-    chatHistory.push({ user: message, bot: reply });
-    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-  } catch (error) {
-    typingEl.textContent = 'Sorry, something went wrong. Please check the server and try again.';
-    console.error(error);
-  }
-}
 
 // Optional: restore previous chat
 try {
