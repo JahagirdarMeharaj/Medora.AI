@@ -3,14 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospital Chatbot</title>
+  <title>Health Assistance Chatbot</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+   <!-- <div class="gradient-background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="glow"></div>
+        <div class="grid-overlay"></div>
+        <div class="noise-overlay"></div>
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+  -->
+  
+
+     <!-- HERO SECTION -->
+  <section class="hero">
+
+    <div class="hero-left">
+      <h1>
+        Smart AI Healthcare <br>
+        Recommendation Chatbot
+      </h1>
+
+      <p>
+        Get instant AI-powered health guidance, symptom analysis,
+        and smart medical recommendations anytime.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#patient-form"><button class="primary-btn">Start Chat</button></a>
+        
+        <button class="secondary-btn">Learn More</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat-box">
+          <h2>24/7</h2>
+          <span>Support</span>
+        </div>
+
+        <div class="stat-box">
+          <h2>AI</h2>
+          <span>Powered</span>
+        </div>
+
+        <div class="stat-box">
+          <h2>100+</h2>
+          <span>Patients</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+
+      <div class="chat-card">
+
+        <div class="chat-header">
+          <div class="dot green"></div>
+          <div class="dot yellow"></div>
+          <div class="dot red"></div>
+        </div>
+
+        <div class="bot-message">
+          👋 Hello! Please describe your symptoms.
+        </div>
+
+        <div class="user-message">
+          I have fever and headache since morning.
+        </div>
+
+        <div class="bot-message">
+          Possible causes may include viral infection or dehydration.
+          Please stay hydrated and consult a doctor if symptoms worsen.
+        </div>
+
+        <div class="typing">
+          AI is typing...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+
+    <h2>Why Choose Our AI Chatbot?</h2>
+
+    <div class="feature-container">
+
+      <div class="feature-card">
+        <h3>⚡ Instant Response</h3>
+        <p>
+          Get immediate health recommendations powered by AI.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🔒 Secure Data</h3>
+        <p>
+          Patient information remains protected and confidential.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🩺 Smart Symptom Analysis</h3>
+        <p>
+          AI analyzes symptoms and provides possible guidance.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="container">
     <header>
   
-      <h1>Hospital AI Chatbot</h1>
+      <h1>Health Assistance Chatbot</h1>
     </header>
 
     <!-- Patient Form -->
@@ -32,10 +163,23 @@
         <input type="text" id="userInput" placeholder="Type your message... eg. symptoms, pain, fever  ">
         <button id="sendBtn">Send</button>
       </div>
-      <button id="clearChat">Clear Chat</button>
-      <button id="toggleMode">Toggle Dark/Light</button>
+      <div class="top-actions">
+        <button id="newChat" class="secondary">New Chat</button>
+        <button id="clearChat" class="secondary">Delete Chat</button>
+        <button id="toggleMode">Toggle Dark/Light</button>
+      </div>
+      <div id="chat-history" class="glass history-panel" aria-label="Chat History"></div>
+      <div id="history-actions" class="history-actions">
+        <span class="history-hint">Select a chat to view history</span>
+      </div>
     </section>
   </div>
+
+
+
+ 
+
+
 
   <script src="script.js"></script>
 </body>
