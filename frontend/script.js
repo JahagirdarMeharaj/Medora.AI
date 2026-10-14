@@ -16,6 +16,12 @@ const historyMenuClose = document.getElementById('historyMenuClose');
 const historyBackdrop = document.getElementById('historyBackdrop');
 const conversationSidebar = document.getElementById('conversation-sidebar');
 const statusMessage = document.getElementById('app-status');
+const configuredApiOrigin = document.querySelector('meta[name="chat-api-origin"]')?.content.trim();
+const isLocalDevelopment = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const chatApiOrigin = isLocalDevelopment
+  ? 'http://127.0.0.1:5000'
+  : configuredApiOrigin || window.location.origin;
+const CHAT_API_URL = new URL('/api/chatbot/message', chatApiOrigin).toString();
 
 let sessions = [];
 let activeSessionId = null;
@@ -302,7 +308,7 @@ async function sendMessage() {
   setStatus('');
 
   try {
-    const response = await fetch('http://localhost:5000/api/chatbot/message', {
+    const response = await fetch(CHAT_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
