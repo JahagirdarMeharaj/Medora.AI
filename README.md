@@ -29,6 +29,25 @@ This project is a simple hospital AI chatbot:
 The backend expects:
 - `GEMINI_API_KEY` (required)
 - `PORT` (optional; defaults to `5000`)
+- `FRONTEND_ORIGINS` (optional; comma-separated exact HTTP(S) frontend origins; defaults to local development origins on port `5500`)
+
+For local development, serve the `frontend/` directory over HTTP at `http://localhost:5500` or `http://127.0.0.1:5500`; opening `index.html` directly as a `file://` URL is not allowed by the API's browser-origin policy. Set `FRONTEND_ORIGINS` to the exact origin(s) of your deployed frontend. Do not use `*` or include URL paths.
+
+### Emergency safety safeguard
+The backend screens the current message and up to five recent user messages for selected emergency warning signs before contacting Gemini. A possible match returns urgent-care guidance without calling the model. This is an initial safeguard, not a clinically validated triage system; a message with no match does not mean that a user is safe.
+
+### Conversation memory
+The frontend sends up to five completed exchanges from the active browser chat with each message. The backend validates the turns and includes them in the Gemini request for follow-up context; history is not stored by the backend. A new chat or a request without history is handled as a fresh conversation. The included history is sent to the configured Gemini provider, so avoid entering identifying or sensitive information.
+
+### Structured chat responses
+Successful chat responses keep the existing `reply` text field for the current frontend and add a `structured` object with `message`, `urgency`, `selfCare`, `warningSigns`, `followUpQuestions`, `sources`, and `status`. The backend requests JSON output from Gemini and validates it before returning it. Malformed or incomplete model output and provider failures produce a cautious fallback with `urgency: "unknown"`. `sources` remains empty because this project does not retrieve or verify evidence. A valid structure does not establish medical accuracy.
+
+Run the backend tests from `backend/` with:
+```bash
+npm test
+```
+
+The automated suite covers emergency warning-sign examples and negations, routine and ambiguous symptom requests, medication safety prompt instructions, follow-up context, history validation, structured-output validation, and provider failures. Provider responses are mocked; passing tests do not establish clinical accuracy or replace review by qualified clinicians. Before production use, have the warning-sign coverage, emergency wording, and model responses reviewed by appropriate clinical and legal/privacy stakeholders.
 
 ## Frontend Setup
 1. Host `frontend/` as static files (any static host is fine).
@@ -46,11 +65,10 @@ The backend expects:
 If you want the frontend and backend on the same domain, configure a reverse proxy (e.g. Nginx) so `/api/...` routes to the backend.
 
 ## Notes
-- The backend applies a simple rate limiter (20 requests/min per IP).
+- The chatbot endpoint is limited to 20 requests per minute per client IP, and JSON request bodies are capped at 64 KB. Patient details are limited to 2,000 bytes.
+- CORS is restricted to configured frontend origins. Requests without an `Origin` header (for example, server-to-server requests) are still accepted; CORS is not authentication.
 - If you forget `GEMINI_API_KEY`, the backend will respond with a misconfiguration message.
 
 ## GitHub upload notes
 - Ensure you have `backend/package-lock.json` committed (it was moved into `backend/`).
 - Do **not** commit `backend/.env` (it’s ignored by `.gitignore`).
-
-
