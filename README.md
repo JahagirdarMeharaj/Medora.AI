@@ -51,15 +51,15 @@ The automated suite covers emergency warning-sign examples and negations, routin
 
 ## Frontend Setup
 1. Host `frontend/` as static files (any static host is fine).
-2. Update `frontend/script.js` to point to your deployed backend URL.
-   - Currently it calls `http://localhost:5000/api/chatbot/message`.
+2. For local development, serve the frontend over HTTP on `localhost` or `127.0.0.1`; it will call the backend at `http://127.0.0.1:5000`.
+3. In production, the frontend sends chat requests to the backend origin in the `chat-api-origin` meta tag in `frontend/index.html`. Set this to your backend's public HTTPS origin, not `localhost`. Configure the backend's `FRONTEND_ORIGINS` to allow the exact frontend origin.
 
 ## Deploying
 ### Recommended (frontend static + backend app)
 1. Deploy the **backend** (Render/Railway/Fly/VPS).
    - Set `GEMINI_API_KEY` and `PORT` if required.
 2. Deploy the **frontend** (Vercel/Netlify/GitHub Pages/etc.).
-3. Update `frontend/script.js` with your backend’s public base URL.
+3. Set `chat-api-origin` to the backend service origin and configure the backend's `FRONTEND_ORIGINS` to allow the deployed frontend origin.
 
 ### Single domain (optional)
 If you want the frontend and backend on the same domain, configure a reverse proxy (e.g. Nginx) so `/api/...` routes to the backend.
